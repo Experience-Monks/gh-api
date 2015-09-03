@@ -2,7 +2,7 @@ var ghApi = require('./')
 var test = require('tape')
 var parseLink = require('parse-link-header')
 
-test('a simple callback-style GitHub API in node / browser', function (t) {
+test('reads contents as json', function (t) {
   t.plan(2)
   ghApi('repos/mattdesl/budo/contents/package.json', {
     query: {
@@ -18,7 +18,7 @@ test('a simple callback-style GitHub API in node / browser', function (t) {
   })
 })
 
-test('a simple callback-style GitHub API in node / browser', function (t) {
+test('provides response headers', function (t) {
   t.plan(1)
   ghApi('repositories', function (err, data, res) {
     if (err) return t.fail(err)
