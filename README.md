@@ -20,8 +20,11 @@ For example, getting a `package.json` from a GitHub repository:
 var github = require('gh-api')
 
 var api = '/repos/mattdesl/gh-api/contents/package.json'
-github(api, function (err, data) {
+github(api, function (err, data, res) {
   if (err) throw err
+  
+  console.log(res.statusCode)
+  //> 200
   
   var buf = new Buffer(data.content, data.encoding)
   var pkg = JSON.parse(buf.toString())
@@ -30,6 +33,8 @@ github(api, function (err, data) {
   //> 'simple GitHub API requests in Node / browser'
 })
 ```
+
+For simple pagination, you can use [parse-link-header](https://www.npmjs.com/package/parse-link-header) on `res.headers.link`.
 
 ## Usage
 

@@ -1,5 +1,6 @@
 var ghApi = require('./')
 var test = require('tape')
+var parseLink = require('parse-link-header')
 
 test('a simple callback-style GitHub API in node / browser', function (t) {
   t.plan(2)
@@ -14,5 +15,14 @@ test('a simple callback-style GitHub API in node / browser', function (t) {
     var str = new Buffer(data.content, data.encoding).toString()
     var pkg = JSON.parse(str)
     t.equal(pkg.version, '3.0.4', 'query.ref is correct')
+  })
+})
+
+test('a simple callback-style GitHub API in node / browser', function (t) {
+  t.plan(1)
+  ghApi('repositories', function (err, data, res) {
+    if (err) return t.fail(err)
+    var links = parseLink(res.headers.link)
+    t.ok(links && links.next && links.next.url, 'got next url')
   })
 })
